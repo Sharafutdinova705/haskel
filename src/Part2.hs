@@ -60,10 +60,10 @@ prob10 color
 --
 -- Найти сумму элементов дерева
 prob11 :: Num a => Tree a -> a
-prob11 tree = leftSum + (tree & root) + rightSum
+prob11 tree = leftSum + (root tree) + rightSum
     where
-        leftSum = maybe 0 prob11 $ tree & left
-        rightSum = maybe 0 prob11 $ tree & right
+        leftSum = maybe 0 prob11 (left tree)
+        rightSum = maybe 0 prob11 (right tree)
 
 ------------------------------------------------------------
 -- PROBLEM #12
