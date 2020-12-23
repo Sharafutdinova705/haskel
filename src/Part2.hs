@@ -8,7 +8,9 @@ import Part2.Types
 -- Написать функцию, которая преобразует значение типа
 -- ColorLetter в символ, равный первой букве значения
 prob6 :: ColorLetter -> Char
-prob6 = error "Implement me!"
+prob6 RED = 'R'
+prob6 GREEN = 'G'
+prob6 BLUE = 'B'
 
 ------------------------------------------------------------
 -- PROBLEM #7
@@ -16,7 +18,8 @@ prob6 = error "Implement me!"
 -- Написать функцию, которая проверяет, что значения
 -- находятся в диапазоне от 0 до 255 (границы входят)
 prob7 :: ColorPart -> Bool
-prob7 = error "Implement me!"
+prob7 colorPart = x >= 0 && x <= 255
+    where x = prob9 colorPart
 
 ------------------------------------------------------------
 -- PROBLEM #8
@@ -24,7 +27,10 @@ prob7 = error "Implement me!"
 -- Написать функцию, которая добавляет в соответствующее
 -- поле значения Color значение из ColorPart
 prob8 :: Color -> ColorPart -> Color
-prob8 = error "Implement me!"
+prob8 color colorPart = case colorPart of
+  Red x -> color { red = red color + x }
+  Blue x -> color { blue = blue color + x }
+  Green x -> color { green = green color + x }
 
 ------------------------------------------------------------
 -- PROBLEM #9
@@ -32,7 +38,10 @@ prob8 = error "Implement me!"
 -- Написать функцию, которая возвращает значение из
 -- ColorPart
 prob9 :: ColorPart -> Int
-prob9 = error "Implement me!"
+prob9 colorPart = case colorPart of
+  Red x -> x
+  Green x -> x
+  Blue x -> x
 
 ------------------------------------------------------------
 -- PROBLEM #10
@@ -40,14 +49,21 @@ prob9 = error "Implement me!"
 -- Написать функцию, которая возвращает компонент Color, у
 -- которого наибольшее значение (если такой единственный)
 prob10 :: Color -> Maybe ColorPart
-prob10 = error "Implement me!"
+prob10 color
+  | red color > green color && red color > blue color = Just (Red (red color))
+  | green color > blue color && green color > red color = Just (Green (green color))
+  | blue color > green color && blue color > red color = Just (Blue (blue color))
+  | otherwise = Nothing
 
 ------------------------------------------------------------
 -- PROBLEM #11
 --
 -- Найти сумму элементов дерева
 prob11 :: Num a => Tree a -> a
-prob11 = error "Implement me!"
+prob11 tree = leftSum + (tree & root) + rightSum
+    where
+        leftSum = maybe 0 prob11 $ tree & left
+        rightSum = maybe 0 prob11 $ tree & right
 
 ------------------------------------------------------------
 -- PROBLEM #12

@@ -80,4 +80,10 @@ prob4 n = if n == 1 || n == (-1) || n == 0 then 1 else if n > 1 then prob4 (n-2)
 -- Числа n и k положительны и не превосходят 10^8.
 -- Число 1 не считается простым числом
 prob5 :: Integer -> Integer -> Bool
-prob5 = error "Implement me!"
+prob5 n k = all (< k) (filter prime (divisors n))
+
+prime :: Integer -> Bool
+prime n = if n == 1 then False else divisors n == [1, n]
+    
+divisors :: Integer -> [Integer]
+divisors n = [x | x <- [1..n], mod(n) x == 0]
