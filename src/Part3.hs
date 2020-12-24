@@ -5,7 +5,13 @@ module Part3 where
 --
 -- Проверить, является ли число N простым (1 <= N <= 10^9)
 prob18 :: Integer -> Bool
-prob18 = error "Implement me!"
+prob18 n = prime n
+
+prime :: Integer -> Bool
+prime n = if n == 1 then False else divisors n == [1, n]
+    
+divisors :: Integer -> [Integer]
+divisors n = [x | x <- [1..n], mod(n) x == 0]
 
 ------------------------------------------------------------
 -- PROBLEM #19
