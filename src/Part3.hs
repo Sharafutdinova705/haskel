@@ -23,15 +23,23 @@ isPrime m i
 -- разложении числа N (1 <= N <= 10^9). Простые делители
 -- должны быть расположены по возрастанию
 prob19 :: Integer -> [(Integer, Int)]
-prob19 x = map (\d -> (d, factorize d x)) (divisors x)
+prob19 x = map (\d -> (d, factorize d x)) (primeDivisors x)
 
 factorize :: Integer -> Integer -> Int
 factorize divisor number
   | mod(number) divisor == 0 = 1 + factorize divisor (div(number) divisor)
   | otherwise = 0
 
-divisors :: Integer -> [Integer]
-divisors n = [x | x <- [1..n], mod(n) x == 0]
+primeDivisors :: Integer -> [Integer]
+primeDivisors x = filter isPrimeDivisors (allDivisors x)
+
+isPrimeDivisors :: Integer -> Bool
+isPrimeDivisors 1 = False
+isPrimeDivisors 2 = True
+isPrimeDivisors n = all (\p -> n `mod` p /= 0) (takeWhile (\p -> p * p <= n) primes)
+
+primes :: [Integer]
+primes = 2 : filter isPrimeDivisors [3, 5 ..]
 
 
 ------------------------------------------------------------
@@ -128,7 +136,7 @@ reversal = x 0
 -- сумма делителей одного (без учёта самого числа) равна
 -- другому, и наоборот
 prob26 :: Integer -> Integer -> Bool
-prob26 a b = sum (divisors a) == a + b && sum (divisors b) == a + b
+prob26 a b = sum (allDivisors a) == a + b && sum (allDivisors b) == a + b
 
 ------------------------------------------------------------
 -- PROBLEM #27
