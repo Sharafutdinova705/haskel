@@ -41,7 +41,13 @@ divisors n = [x | x <- [1..n], mod(n) x == 0]
 -- Совершенное число равно сумме своих делителей (меньших
 -- самого числа)
 prob20 :: Integer -> Bool
-prob20 n = sum (prob21 n) == n
+prob20 n = sum (removeSelf n (allDivisors n)) == n
+
+removeSelf :: Integer -> [Integer] -> [Integer]
+removeSelf _ [] = []
+removeSelf x (y : ys)
+  | x == y = removeSelf x ys
+  | otherwise = y : removeSelf x ys
 
 ------------------------------------------------------------
 -- PROBLEM #21
