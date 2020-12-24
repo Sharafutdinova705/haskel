@@ -68,7 +68,7 @@ prob3 step n = if n == 1 then 0 else prob3 step (step n) + 1
 --
 -- Число n по модулю не превосходит 10^5
 prob4 :: Integer -> Integer
-prob4 n = if n == 1 || n == (-1) || n == 0 then 1 else if n > 1 then prob4 (n-2) + prob4 (n-1) else prob4 (n+2) - prob4 (n+1) 
+prob4 n = if n == 1 || n == 0 then 1 else if n > 1 then prob4 (n-2) + prob4 (n-1) else prob4 (n+2) - prob4 (n+1) 
 
 
 ------------------------------------------------------------
