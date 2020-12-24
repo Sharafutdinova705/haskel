@@ -103,7 +103,9 @@ prob23 = error "Implement me!"
 -- представить как сумму чисел от 1 до какого-то K
 -- (1 <= N <= 10^10)
 prob24 :: Integer -> Bool
-prob24 = error "Implement me!"
+prob24 num = fractionalPortion (sqrt (1 + 8 * fromInteger num)) == 0
+  where
+    fractionalPortion x = x - fromIntegral (floor x)
 
 ------------------------------------------------------------
 -- PROBLEM #25
