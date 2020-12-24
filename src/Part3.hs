@@ -43,11 +43,11 @@ prob20 n = sum (prob21 n) == n
 -- Вернуть список всех делителей числа N (1<=N<=10^10) в
 -- порядке возрастания
 prob21 :: Integer -> [Integer]
-prob21 n = sort (allDivisors n)
+prob21 n = sorting (allDivisors n)
 
-sort :: Ord a => [a] -> [a]
-sort [] = []
-sort (p : xs) = (sort b) ++ [p] ++ (sort c)
+sorting :: Ord a => [a] -> [a]
+sorting [] = []
+sorting (p : xs) = (sorting b) ++ [p] ++ (sorting c)
   where
     b = filter (< p) xs
     c = filter (>= p) xs
