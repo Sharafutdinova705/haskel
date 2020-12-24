@@ -29,7 +29,7 @@ prob19 = error "Implement me!"
 -- Совершенное число равно сумме своих делителей (меньших
 -- самого числа)
 prob20 :: Integer -> Bool
-prob20 = error "Implement me!"
+prob20 n = sum (prob21 n) == n
 
 ------------------------------------------------------------
 -- PROBLEM #21
@@ -37,7 +37,24 @@ prob20 = error "Implement me!"
 -- Вернуть список всех делителей числа N (1<=N<=10^10) в
 -- порядке возрастания
 prob21 :: Integer -> [Integer]
-prob21 = error "Implement me!"
+prob21 n = sort (allDivisors n)
+
+sort :: Ord a => [a] -> [a]
+sort [] = []
+sort (p : xs) = (sort b) ++ [p] ++ (sort c)
+  where
+    b = filter (< p) xs
+    c = filter (>= p) xs
+
+allDivisors :: Integer -> [Integer]
+allDivisors 1 = [1]
+allDivisors k =
+  k :
+  concatMap
+    (\x -> [x] ++ if div(k) x == x then [] else [div(k) x])
+    ( filter (\x -> mod(k) x == 0) $ takeWhile (\x -> x * x <= k) [2 ..])
+    ++ [1]
+
 
 ------------------------------------------------------------
 -- PROBLEM #22
