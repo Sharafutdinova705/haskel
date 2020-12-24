@@ -113,7 +113,13 @@ prob24 num = fractionalPortion (sqrt (1 + 8 * fromInteger num)) == 0
 -- Проверить, что запись числа является палиндромом (т.е.
 -- читается одинаково слева направо и справа налево)
 prob25 :: Integer -> Bool
-prob25 = error "Implement me!"
+prob25 n = reversal n == n
+
+reversal :: Integral a => a -> a
+reversal = x 0
+  where
+    x a 0 = a
+    x a b = let (q, r) = quotRem(b) 10 in x (a * 10 + r) q
 
 ------------------------------------------------------------
 -- PROBLEM #26
