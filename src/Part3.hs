@@ -20,7 +20,13 @@ divisors n = [x | x <- [1..n], mod(n) x == 0]
 -- разложении числа N (1 <= N <= 10^9). Простые делители
 -- должны быть расположены по возрастанию
 prob19 :: Integer -> [(Integer, Int)]
-prob19 = error "Implement me!"
+prob19 x = map (\d -> (d, factorize d x)) (divisors x)
+
+factorize :: Integer -> Integer -> Int
+factorize divisor number
+  | mod(number) divisor == 0 = 1 + factorize divisor (div(number) divisor)
+  | otherwise = 0
+
 
 ------------------------------------------------------------
 -- PROBLEM #20
