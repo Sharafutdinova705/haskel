@@ -102,7 +102,21 @@ count xs = toInteger (length (filter (== 'i') xs))
 -- M > 0 и N > 0. Если M > N, то вернуть символы из W в
 -- обратном порядке. Нумерация символов с единицы.
 prob23 :: String -> Maybe String
-prob23 = error "Implement me!"
+prob23 input = do
+   let leftN =  read $ takeWhile (/= '-') input
+   let rightM =  read $ takeWhile (/= ':') $ tail $ dropWhile (/= '-') input
+   let parseStr = tail $ dropWhile (/= ' ') input
+   getMaybeString leftN rightM parseStr
+
+getMaybeString :: Int -> Int -> String -> Maybe String
+getMaybeString leftN rightM parseString 
+  | leftN > (length parseString)  || rightM > (length parseString) = Nothing
+  | leftN > rightM = (Just (reverseStr (take leftN  $ drop (rightM - 1) parseString)))
+  | otherwise = (Just (take rightM  $ drop (leftN - 1) parseString))
+
+
+reverseStr :: [a] -> [a]  
+reverseStr = foldl (\acc x -> x : acc) [] 
 
 ------------------------------------------------------------
 -- PROBLEM #24
@@ -144,7 +158,15 @@ prob26 a b = sum (allDivisors a) == a + b && sum (allDivisors b) == a + b
 -- Найти в списке два числа, сумма которых равна заданному.
 -- Длина списка не превосходит 500
 prob27 :: Int -> [Int] -> Maybe (Int, Int)
-prob27 = error "Implement me!"
+prob27 _ [] = Nothing
+prob27 summ (h : t) = fixedCurrent h t
+    where
+        fixedCurrent :: Int -> [Int] -> Maybe (Int, Int)
+        fixedCurrent _ [] = prob27 summ t
+        fixedCurrent a (b : c) =
+            if a + b == summ
+            then Just (a, b)
+            else fixedCurrent a c
 
 ------------------------------------------------------------
 -- PROBLEM #28
@@ -161,7 +183,10 @@ prob28 = error "Implement me!"
 -- Найти наибольшее число-палиндром, которое является
 -- произведением двух K-значных (1 <= K <= 3)
 prob29 :: Int -> Int
-prob29 k = error "Implement me!"
+prob29 k = maximum [x * y |x <- [a .. b],y <- [a .. b], (prob25 . toInteger)  (x * y)]
+               where
+                   a = 10 ^ (k - 1)
+                   b = 10 ^ k - 1
 
 ------------------------------------------------------------
 -- PROBLEM #30
@@ -169,7 +194,10 @@ prob29 k = error "Implement me!"
 -- Найти наименьшее треугольное число, у которого не меньше
 -- заданного количества делителей
 prob30 :: Int -> Integer
-prob30 = error "Implement me!"
+prob30 k = head (filter (\t -> length (allDivisors t) >= k) triangleNumbers)
+
+triangleNumbers :: [Integer]
+triangleNumbers = map (\n -> n * (n + 1) `div` 2) [0..]
 
 ------------------------------------------------------------
 -- PROBLEM #31
@@ -187,4 +215,8 @@ prob31 = error "Implement me!"
 -- указанного достоинства
 -- Сумма не превосходит 100
 prob32 :: [Int] -> Int -> [[Int]]
-prob32 = error "Implement me!"
+prob32 coins total | total < minimum coins = []
+                   | otherwise = [coin : next
+                                 | coin <- reverse coins,
+                                 next <- []:prob32 (filter (<= coin) coins) (total - coin),
+                                 sum (coin:next)== total]
