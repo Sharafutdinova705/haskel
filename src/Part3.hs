@@ -122,7 +122,7 @@ prob25 = error "Implement me!"
 -- сумма делителей одного (без учёта самого числа) равна
 -- другому, и наоборот
 prob26 :: Integer -> Integer -> Bool
-prob26 = error "Implement me!"
+prob26 a b = sum (divisors a) == a + b && sum (divisors b) == a + b
 
 ------------------------------------------------------------
 -- PROBLEM #27
