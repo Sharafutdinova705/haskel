@@ -80,7 +80,10 @@ allDivisors k =
 -- Подсчитать произведение количеств букв i в словах из
 -- заданной строки (списка символов)
 prob22 :: String -> Integer
-prob22 = error "Implement me!"
+prob22 str = product $ map count (words str)
+
+count :: String -> Integer
+count xs = toInteger (length (filter (== 'i') xs))
 
 ------------------------------------------------------------
 -- PROBLEM #23
