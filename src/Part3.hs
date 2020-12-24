@@ -8,10 +8,13 @@ prob18 :: Integer -> Bool
 prob18 n = prime n
 
 prime :: Integer -> Bool
-prime n = if n == 1 then False else divisors n == [1, n]
-    
-divisors :: Integer -> [Integer]
-divisors n = [x | x <- [1..n], mod(n) x == 0]
+prime n = if n == 1 then False else isPrime n 2
+
+isPrime :: Integer -> Integer -> Bool
+isPrime m i
+  | i * i > m = True
+  | m `rem` i == 0 = False
+  | otherwise = isPrime m (i + 1)
 
 ------------------------------------------------------------
 -- PROBLEM #19
@@ -26,6 +29,9 @@ factorize :: Integer -> Integer -> Int
 factorize divisor number
   | mod(number) divisor == 0 = 1 + factorize divisor (div(number) divisor)
   | otherwise = 0
+
+divisors :: Integer -> [Integer]
+divisors n = [x | x <- [1..n], mod(n) x == 0]
 
 
 ------------------------------------------------------------
